@@ -1,0 +1,13 @@
+.placeholder-container {
+    text-align: center;
+    margin: 50px auto;
+    padding: 20px;
+  }
+  
+  .placeholder-container h2 {
+    color: #1976d2;
+  }
+  
+  .placeholder-container p {
+    color: #555;
+  }

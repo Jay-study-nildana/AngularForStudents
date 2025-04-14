@@ -1,0 +1,49 @@
+<div class="nasa-container">
+    <h2>NASA API URL Generator</h2>
+    <form (ngSubmit)="generateUrl()" #nasaForm="ngForm">
+      <!-- API Key Input -->
+      <div class="form-group">
+        <label for="apikey">Enter Your NASA API Key</label>
+        <input
+          type="text"
+          id="apikey"
+          name="apikey"
+          [(ngModel)]="apiKey"
+          required
+          placeholder="Enter your NASA API key"
+        />
+      </div>
+  
+      <!-- Generate URL Button -->
+      <button type="submit" [disabled]="!nasaForm.valid">Generate URL</button>
+    </form>
+  
+    <!-- Display Generated URL -->
+    <div class="generated-url" *ngIf="generatedUrl">
+      <p>Your NASA API URL:</p>
+      <a [href]="generatedUrl" target="_blank">{{ generatedUrl }}</a>
+    </div>
+  
+    <!-- Fetch Data Button -->
+    <div class="fetch-data">
+      <button (click)="fetchData()">Fetch NASA Data</button>
+    </div>
+  
+    <!-- Loading Indicator -->
+    <div class="loading-indicator" *ngIf="isLoading">
+      <p>Loading data from NASA API...</p>
+    </div>
+  
+    <!-- Display Error Message -->
+    <div class="error-message" *ngIf="errorMessage">
+      <p>{{ errorMessage }}</p>
+    </div>
+  
+    <!-- Display API Response -->
+    <div class="api-response" *ngIf="apiResponse">
+      <h3>{{ apiResponse.title }}</h3>
+      <p><strong>Date:</strong> {{ apiResponse.date }}</p>
+      <p><strong>Explanation:</strong> {{ apiResponse.explanation }}</p>
+      <img *ngIf="apiResponse.media_type === 'image'" [src]="apiResponse.url" [alt]="apiResponse.title" />
+    </div>
+  </div>

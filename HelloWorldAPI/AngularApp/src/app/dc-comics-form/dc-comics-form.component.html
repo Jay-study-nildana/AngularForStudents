@@ -1,0 +1,54 @@
+<div class="form-container">
+    <h2>DC Comics Fan Form</h2>
+    <form (ngSubmit)="onSubmit()" #dcForm="ngForm">
+      <!-- Name -->
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" [(ngModel)]="formData.name" required />
+      </div>
+  
+      <!-- Date of Birth -->
+      <div class="form-group">
+        <label for="dob">Date of Birth</label>
+        <input type="date" id="dob" name="dob" [(ngModel)]="formData.dob" required />
+      </div>
+  
+      <!-- Favorite DC Character -->
+      <div class="form-group">
+        <label for="character">Favorite DC Character</label>
+        <select id="character" name="character" [(ngModel)]="formData.character" required>
+          <option value="" disabled selected>Select your favorite character</option>
+          <option value="Batman">Batman</option>
+          <option value="Superman">Superman</option>
+          <option value="Wonder Woman">Wonder Woman</option>
+          <option value="The Flash">The Flash</option>
+          <option value="Aquaman">Aquaman</option>
+        </select>
+      </div>
+  
+      <!-- Rating -->
+      <div class="form-group">
+        <label for="rating">Rate Your Love for DC Comics (1-10)</label>
+        <input type="number" id="rating" name="rating" [(ngModel)]="formData.rating" min="1" max="10" required />
+      </div>
+  
+      <!-- Favorite Movie -->
+      <div class="form-group">
+        <label for="movie">Favorite DC Movie</label>
+        <input type="text" id="movie" name="movie" [(ngModel)]="formData.movie" />
+      </div>
+  
+      <!-- Submit Button -->
+      <button type="submit" [disabled]="!dcForm.valid">Submit</button>
+    </form>
+  
+    <!-- Display Submitted Data -->
+    <div class="submitted-data" *ngIf="submitted">
+      <h3>Submitted Data</h3>
+      <p><strong>Name:</strong> {{ formData.name }}</p>
+      <p><strong>Date of Birth:</strong> {{ formData.dob }}</p>
+      <p><strong>Favorite DC Character:</strong> {{ formData.character }}</p>
+      <p><strong>Rating:</strong> {{ formData.rating }}</p>
+      <p><strong>Favorite Movie:</strong> {{ formData.movie }}</p>
+    </div>
+  </div>

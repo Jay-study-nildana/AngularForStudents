@@ -1,0 +1,32 @@
+<div class="weather-container">
+    <h2>Weather Forecast</h2>
+    <button (click)="loadWeatherData()" [disabled]="loading">Load Weather Data</button>
+  
+    <!-- Show loading indicator -->
+    <div *ngIf="loading" class="loading-indicator">
+      Loading weather data, please wait...
+    </div>
+  
+    <table *ngIf="!loading && weatherData.length > 0; else noData" class="weather-table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Temperature (°C)</th>
+          <th>Temperature (°F)</th>
+          <th>Summary</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let weather of weatherData">
+          <td>{{ weather.date }}</td>
+          <td>{{ weather.temperatureC }}</td>
+          <td>{{ weather.temperatureF }}</td>
+          <td>{{ weather.summary }}</td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <ng-template #noData>
+      <p *ngIf="!loading">No weather data available. Click the button above to load data.</p>
+    </ng-template>
+  </div>

@@ -1,15 +1,13 @@
-# Angular For Students
+# Hello World API
 
-Some Angular hello world projects for my students, primarily projects that work with .NET WebAPIs.
+Project with both BackEnd (.NET Web API) and Front End (Angular Web App).
+
+Note: Run the Web API before running the web app.
 
 ## Projects
 
-1. [Hello World](HelloWorld)
-1. [Hello World - .NET API](HelloWorldAPI)
-
-# book a session with me
-
-1. [calendly](https://calendly.com/jaycodingtutor/30min)
+1. [AngularApp](AngularApp)
+1. [DotNetWebAPI](DotNetWebAPI)
 
 # hire and get to know me
 
