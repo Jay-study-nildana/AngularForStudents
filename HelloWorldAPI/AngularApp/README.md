@@ -1,11 +1,16 @@
-# Angular For Students
+# Angular Hello World Project
 
-Some Angular hello world projects for my students, primarily projects that work with .NET WebAPIs.
+Note: Run the associated web api project, WebAPIApril2025 before running this web app.
 
-## Projects
+A simple Angular 16 hello world projec that show cases the following concepts
 
-1. [Hello World](HelloWorld)
-1. [Hello World - .NET API](HelloWorldAPI)
+1. Simple Navigation between different components
+1. External Links to URLs
+1. Consumes the Publisher POST and GET EndPoint
+1. Consumes the Comic POST and GET EndPoint
+1. Consume the Character POST and GET EndPoint
+
+Note: There are more endpoints available, which are not yet added to the current web app. 
 
 # book a session with me
 

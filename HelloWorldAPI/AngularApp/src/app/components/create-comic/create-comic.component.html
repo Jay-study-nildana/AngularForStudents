@@ -1,0 +1,57 @@
+<div class="create-comic-container">
+    <h2>Create Comic</h2>
+    <form (ngSubmit)="createComic()">
+      <div>
+        <label for="title">Comic Title:</label>
+        <input
+          type="text"
+          id="title"
+          [(ngModel)]="comic.title"
+          name="title"
+          required
+        />
+      </div>
+      <div>
+        <label for="publisherId">Publisher:</label>
+        <select
+          id="publisherId"
+          [(ngModel)]="comic.publisherId"
+          name="publisherId"
+          required
+        >
+          <option *ngFor="let publisher of publishers" [value]="publisher.id">
+            {{ publisher.name }}
+          </option>
+        </select>
+      </div>
+      <button type="submit">Create Comic</button>
+    </form>
+  
+    <!-- Display success response -->
+    <div *ngIf="response" class="success-message">
+      <p>Comic created successfully!</p>
+      <p><strong>ID:</strong> {{ response.id }}</p>
+      <p><strong>Title:</strong> {{ response.title }}</p>
+      <p><strong>Publisher ID:</strong> {{ response.publisherId }}</p>
+    </div>
+  
+    <!-- Display error message -->
+    <div *ngIf="errorMessage" class="error-message">
+      <p>{{ errorMessage }}</p>
+    </div>
+  
+    <hr />
+  
+    <h3>All Comics</h3>
+    <div *ngFor="let publisher of publishers">
+      <h4>{{ publisher.name }}</h4>
+      <ul *ngIf="isComicsAvailable(publisher.id); else noComics">
+        <li *ngFor="let comic of getComicsForPublisher(publisher.id)">
+          <strong>ID:</strong> {{ comic.id }} - <strong>Title:</strong> {{ comic.title }}
+        </li>
+      </ul>
+      <ng-template #noComics>
+        <p>No comics available for this publisher.</p>
+      </ng-template>
+    </div>
+  </div>

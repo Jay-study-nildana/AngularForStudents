@@ -1,11 +1,13 @@
-# Angular For Students
+# Angular Hello World Project
 
-Some Angular hello world projects for my students, primarily projects that work with .NET WebAPIs.
+A simple Angular 16 hello world projec that show cases the following concepts
 
-## Projects
-
-1. [Hello World](HelloWorld)
-1. [Hello World - .NET API](HelloWorldAPI)
+1. Simple Navigation between different components
+1. External Links to URLs
+1. Gallery that displays images without using any external libraries
+1. Simple form that takes date, string and numbers and displays entered data
+1. Simple URL builder
+1. Consumes the NASA APOD API Endpoint using the URL builder
 
 # book a session with me
 

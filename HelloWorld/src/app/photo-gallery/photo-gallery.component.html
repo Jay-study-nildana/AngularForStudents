@@ -1,0 +1,19 @@
+<div class="gallery-container">
+    <h2>Photo Gallery</h2>
+    <div class="gallery-grid">
+      <div *ngFor="let image of galleryImages; let i = index" class="gallery-item">
+        <img [src]="image.thumb" alt="Photo {{ i + 1 }}" (click)="openModal(i)">
+      </div>
+    </div>
+  
+    <!-- Modal -->
+    <div class="modal" *ngIf="isModalOpen">
+      <div class="modal-content">
+        <span class="close" (click)="closeModal()">&times;</span>
+        <img [src]="galleryImages[currentImageIndex].src" alt="Photo">
+        <p>{{ galleryImages[currentImageIndex].caption }}</p>
+        <button class="prev" (click)="prevImage()">&#10094;</button>
+        <button class="next" (click)="nextImage()">&#10095;</button>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,42 @@
+.weather-container {
+    margin: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  button {
+    margin-bottom: 10px;
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
+  .weather-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  .weather-table th,
+  .weather-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .weather-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+  }
+
+  .loading-indicator {
+    margin: 10px 0;
+    font-style: italic;
+    color: #555;
+  }

@@ -1,0 +1,41 @@
+<div class="create-publisher-container">
+    <h2>Create Publisher</h2>
+    <form (ngSubmit)="createPublisher()">
+      <div>
+        <label for="name">Publisher Name:</label>
+        <input
+          type="text"
+          id="name"
+          [(ngModel)]="publisher.name"
+          name="name"
+          required
+        />
+      </div>
+      <button type="submit">Create Publisher</button>
+    </form>
+  
+    <!-- Display success response -->
+    <div *ngIf="response" class="success-message">
+      <p>Publisher created successfully!</p>
+      <p><strong>ID:</strong> {{ response.id }}</p>
+      <p><strong>Name:</strong> {{ response.name }}</p>
+    </div>
+  
+    <!-- Display error message -->
+    <div *ngIf="errorMessage" class="error-message">
+      <p>{{ errorMessage }}</p>
+    </div>
+  
+    <hr />
+  
+    <h3>All Publishers</h3>
+    <ul *ngIf="publishers.length > 0; else noPublishers">
+      <li *ngFor="let publisher of publishers">
+        <strong>ID:</strong> {{ publisher.id }} - <strong>Name:</strong> {{ publisher.name }}
+      </li>
+    </ul>
+  
+    <ng-template #noPublishers>
+      <p>No publishers available.</p>
+    </ng-template>
+  </div>
