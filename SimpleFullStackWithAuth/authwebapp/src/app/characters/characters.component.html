@@ -1,0 +1,80 @@
+<div class="container py-5">
+    <div class="row">
+      <div class="col-md-8 offset-md-2">
+        <div class="card">
+          <div class="card-header bg-warning text-dark d-flex justify-content-between align-items-center">
+            <div>
+              <h2>Star Wars Characters</h2>
+              <p class="mb-0">These characters are only available to users with the "Reader" role.</p>
+            </div>
+            <button class="btn btn-dark" (click)="loadCharacters()" [disabled]="isLoading">
+              <i class="bi bi-arrow-clockwise" *ngIf="!isLoading"></i>
+              <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+              Refresh
+            </button>
+          </div>
+          <div class="card-body">
+            <!-- Permission error -->
+            <div *ngIf="error && error.includes('permissions')" class="alert alert-danger">
+              <i class="bi bi-shield-exclamation me-2"></i>
+              {{ error }}
+            </div>
+            
+            <!-- Authentication error -->
+            <div *ngIf="error && error.includes('Authentication')" class="alert alert-warning">
+              <i class="bi bi-lock-fill me-2"></i>
+              {{ error }}
+              <div class="mt-2">
+                <a routerLink="/login" [queryParams]="{returnUrl: '/characters'}" class="btn btn-primary btn-sm">
+                  Login to View
+                </a>
+              </div>
+            </div>
+            
+            <!-- Other errors -->
+            <div *ngIf="error && !error.includes('permissions') && !error.includes('Authentication')" class="alert alert-danger">
+              {{ error }}
+              <button class="btn btn-sm btn-outline-danger ms-2" (click)="loadCharacters()">Try Again</button>
+            </div>
+            
+            <!-- Loading spinner -->
+            <div *ngIf="isLoading" class="text-center my-5">
+              <div class="spinner-border text-warning" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+              <p class="mt-2">Loading characters...</p>
+            </div>
+            
+            <!-- Characters list -->
+            <div *ngIf="!isLoading && !error">
+              <div class="list-group">
+                <div *ngFor="let character of characters" class="list-group-item list-group-item-action">
+                  <div class="d-flex w-100 justify-content-between align-items-center">
+                    <h5 class="mb-1">{{ character }}</h5>
+                    <span class="badge bg-warning text-dark">Reader Only</span>
+                  </div>
+                  <small class="text-muted">
+                    <i class="bi bi-person-badge me-1"></i>
+                    Access restricted to users with Reader role
+                  </small>
+                </div>
+              </div>
+              
+              <div *ngIf="characters.length === 0" class="alert alert-info mt-3">
+                No characters available.
+              </div>
+            </div>
+          </div>
+          <div class="card-footer d-flex justify-content-between align-items-center">
+            <small class="text-muted">
+              <i class="bi bi-shield-lock me-1"></i>
+              Data from role-protected API endpoint
+            </small>
+            <div *ngIf="lastUpdated">
+              <small class="text-muted">Last updated: {{ lastUpdated | date:'medium' }}</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

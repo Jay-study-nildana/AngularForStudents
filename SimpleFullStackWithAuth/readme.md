@@ -1,13 +1,9 @@
-# Angular For Students
+# Simple Full Stack with Authorization
 
-Some Angular hello world projects for my students, primarily projects that work with .NET WebAPIs.
+Contains two projects
 
-## Projects
-
-1. [Hello World](HelloWorld)
-1. [Hello World - .NET API](HelloWorldAPI)
-1. [HelloWorldBootstrap](HelloWorldBootstrap)
-1. [SimpleFullStackWithAuth](SimpleFullStackWithAuth)
+1. [Back End](AuthAPI)
+1. [Front End](authwebapp)
 
 # book a session with me
 

@@ -1,0 +1,74 @@
+<div class="container py-5">
+    <div class="row">
+      <div class="col-md-8 offset-md-2">
+        <div class="card">
+          <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <div>
+              <h2>Protected Planets</h2>
+              <p class="mb-0">These planets are only available to authenticated users.</p>
+            </div>
+            <button class="btn btn-light" (click)="loadPlanets()" [disabled]="isLoading">
+              <i class="bi bi-arrow-clockwise" *ngIf="!isLoading"></i>
+              <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+              Refresh
+            </button>
+          </div>
+          <div class="card-body">
+            <!-- Authentication required warning -->
+            <div *ngIf="error && error.includes('Authentication required')" class="alert alert-warning">
+              <i class="bi bi-lock-fill me-2"></i>
+              {{ error }}
+              <div class="mt-2">
+                <a routerLink="/login" [queryParams]="{returnUrl: '/planets'}" class="btn btn-primary btn-sm">
+                  Login to View
+                </a>
+              </div>
+            </div>
+            
+            <!-- Other errors -->
+            <div *ngIf="error && !error.includes('Authentication required')" class="alert alert-danger">
+              {{ error }}
+              <button class="btn btn-sm btn-outline-danger ms-2" (click)="loadPlanets()">Try Again</button>
+            </div>
+            
+            <!-- Loading spinner -->
+            <div *ngIf="isLoading" class="text-center my-5">
+              <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+              <p class="mt-2">Loading planets...</p>
+            </div>
+            
+            <!-- Planets list -->
+            <div *ngIf="!isLoading && !error">
+              <div class="list-group">
+                <div *ngFor="let planet of planets" class="list-group-item list-group-item-action">
+                  <div class="d-flex w-100 justify-content-between align-items-center">
+                    <h5 class="mb-1">{{ planet }}</h5>
+                    <span class="badge bg-primary">Protected</span>
+                  </div>
+                  <small class="text-muted">
+                    <i class="bi bi-shield-lock me-1"></i>
+                    Access restricted to authenticated users
+                  </small>
+                </div>
+              </div>
+              
+              <div *ngIf="planets.length === 0" class="alert alert-info mt-3">
+                No planets available.
+              </div>
+            </div>
+          </div>
+          <div class="card-footer d-flex justify-content-between align-items-center">
+            <small class="text-muted">
+              <i class="bi bi-lock me-1"></i>
+              Data from protected API endpoint
+            </small>
+            <div *ngIf="lastUpdated">
+              <small class="text-muted">Last updated: {{ lastUpdated | date:'medium' }}</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
