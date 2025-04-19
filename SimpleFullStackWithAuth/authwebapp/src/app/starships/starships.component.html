@@ -1,0 +1,65 @@
+<div class="container py-5">
+    <div class="row">
+      <div class="col-md-8 offset-md-2">
+        <div class="card">
+          <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center">
+            <div>
+              <h2>Public Starships</h2>
+              <p class="mb-0">These starships are available to all users without authentication.</p>
+            </div>
+            <button class="btn btn-light" (click)="loadStarships()" [disabled]="isLoading">
+              <i class="bi bi-arrow-clockwise" *ngIf="!isLoading"></i>
+              <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+              Refresh
+            </button>
+          </div>
+          <div class="card-body">
+            <!-- Loading spinner -->
+            <div *ngIf="isLoading" class="text-center my-5">
+              <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+              <p class="mt-2">Loading starships...</p>
+            </div>
+            
+            <!-- Error message -->
+            <div *ngIf="error" class="alert alert-danger">
+              {{ error }}
+              <button class="btn btn-sm btn-outline-danger ms-2" (click)="loadStarships()">Try Again</button>
+            </div>
+            
+            <!-- Starships list -->
+            <div *ngIf="!isLoading && !error">
+              <div class="list-group">
+                <div *ngFor="let ship of starships; let i = index" class="list-group-item list-group-item-action">
+                  <div class="d-flex w-100 justify-content-between align-items-center">
+                    <h5 class="mb-1">{{ ship }}</h5>
+                    <span class="badge bg-secondary">Public</span>
+                  </div>
+                  <div class="mt-2">
+                    <button class="btn btn-sm btn-outline-info me-2" (click)="viewDetails(ship)">
+                      View Details
+                    </button>
+                    <button class="btn btn-sm btn-outline-secondary" (click)="toggleFavorite(i)">
+                      <i class="bi" [ngClass]="favorites[i] ? 'bi-star-fill' : 'bi-star'"></i>
+                      {{ favorites[i] ? 'Favorited' : 'Add to Favorites' }}
+                    </button>
+                  </div>
+                </div>
+              </div>
+              
+              <div *ngIf="starships.length === 0" class="alert alert-info mt-3">
+                No starships available.
+              </div>
+            </div>
+          </div>
+          <div class="card-footer d-flex justify-content-between align-items-center">
+            <small class="text-muted">Data from public API endpoint</small>
+            <div *ngIf="lastUpdated">
+              <small class="text-muted">Last updated: {{ lastUpdated | date:'medium' }}</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

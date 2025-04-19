@@ -1,0 +1,28 @@
+<div class="container py-5">
+    <div class="row">
+      <div class="col-md-8 offset-md-2">
+        <div class="card border-danger">
+          <div class="card-header bg-danger text-white">
+            <h2><i class="bi bi-exclamation-triangle-fill me-2"></i> Access Denied</h2>
+          </div>
+          <div class="card-body">
+            <div class="text-center mb-4">
+              <i class="bi bi-shield-lock" style="font-size: 4rem; color: #dc3545;"></i>
+            </div>
+            <h4 class="text-center">You don't have permission to access this resource</h4>
+            <p class="text-center">
+              This page requires a role that your account doesn't have. Please contact an administrator if you believe this is an error.
+            </p>
+            <div class="text-center mt-4">
+              <button class="btn btn-outline-secondary me-2" (click)="goBack()">
+                <i class="bi bi-arrow-left me-1"></i> Go Back
+              </button>
+              <a routerLink="/" class="btn btn-primary">
+                <i class="bi bi-house me-1"></i> Go to Home
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

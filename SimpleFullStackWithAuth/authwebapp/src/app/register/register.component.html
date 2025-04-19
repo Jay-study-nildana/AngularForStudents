@@ -1,0 +1,75 @@
+html -->
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <div class="card">
+        <div class="card-header bg-primary text-white">
+          <h2>Register</h2>
+        </div>
+        <div class="card-body">
+          <form (ngSubmit)="onSubmit()">
+            <!-- Success message -->
+            <div *ngIf="successMessage" class="alert alert-success">
+              {{ successMessage }}
+            </div>
+            
+            <!-- Error message -->
+            <div *ngIf="errorMessage" class="alert alert-danger">
+              {{ errorMessage }}
+            </div>
+            
+            <div class="mb-3">
+              <label for="email" class="form-label">Email address</label>
+              <input 
+                type="email" 
+                class="form-control" 
+                id="email" 
+                name="email"
+                [(ngModel)]="registerRequest.email"
+                required
+                placeholder="Enter email">
+              <div class="form-text">We'll never share your email with anyone else.</div>
+            </div>
+            
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input 
+                type="password" 
+                class="form-control" 
+                id="password" 
+                name="password"
+                [(ngModel)]="registerRequest.password"
+                required
+                placeholder="Password">
+              <div class="form-text">Password must be at least 8 characters long and include uppercase, lowercase, numbers and special characters.</div>
+            </div>
+            
+            <div class="mb-3">
+              <label for="confirmPassword" class="form-label">Confirm Password</label>
+              <input 
+                type="password" 
+                class="form-control" 
+                id="confirmPassword" 
+                name="confirmPassword"
+                [(ngModel)]="confirmPassword"
+                required
+                placeholder="Confirm password">
+            </div>
+            
+            <button 
+              type="submit" 
+              class="btn btn-primary" 
+              [disabled]="isLoading">
+              <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+              Register
+            </button>
+            
+            <div class="mt-3">
+              <p>Already have an account? <a routerLink="/login">Login here</a></p>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

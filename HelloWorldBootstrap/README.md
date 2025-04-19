@@ -1,13 +1,6 @@
-# Angular For Students
+# Hello World Bootstrap
 
-Some Angular hello world projects for my students, primarily projects that work with .NET WebAPIs.
-
-## Projects
-
-1. [Hello World](HelloWorld)
-1. [Hello World - .NET API](HelloWorldAPI)
-1. [HelloWorldBootstrap](HelloWorldBootstrap)
-1. [SimpleFullStackWithAuth](SimpleFullStackWithAuth)
+A simple angular project with bootstrap configured. 
 
 # book a session with me
 
