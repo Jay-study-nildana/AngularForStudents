@@ -3,6 +3,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CollapseModule } from 'ngx-bootstrap/collapse';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 // ngx-bootstrap modules
@@ -31,6 +33,8 @@ import { PlanetsComponent } from './planets/planets.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { CharactersComponent } from './characters/characters.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 
 @NgModule({
@@ -46,7 +50,9 @@ import { CharactersComponent } from './characters/characters.component';
     StarshipsComponent,
     PlanetsComponent,
     UnauthorizedComponent,
-    CharactersComponent
+    CharactersComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,
@@ -54,12 +60,14 @@ import { CharactersComponent } from './characters/characters.component';
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    ReactiveFormsModule,
     AccordionModule.forRoot(),
     AlertModule.forRoot(),
     ButtonsModule.forRoot(),
     ProgressbarModule.forRoot(),
     TabsModule.forRoot(),
     TooltipModule.forRoot(),
+    CollapseModule.forRoot(),
     RatingModule.forRoot()
   ],
   providers: [

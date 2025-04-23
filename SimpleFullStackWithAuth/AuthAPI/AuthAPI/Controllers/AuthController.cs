@@ -143,5 +143,74 @@ namespace AuthAPI.Controllers
             return Ok(usersWithRoles);
         }
 
+        [HttpPost]
+        [Route("request-password-reset")]
+        public async Task<IActionResult> RequestPasswordReset([FromBody] PasswordResetRequestDto request)
+        {
+            var user = await userManager.FindByEmailAsync(request.Email);
+            if (user == null)
+            {
+                return BadRequest("User not found.");
+            }
+
+            // Generate password reset token
+            var token = await userManager.GeneratePasswordResetTokenAsync(user);
+
+            // Return the token in the response (for classroom purposes)
+            return Ok(new { Token = token });
+        }
+
+        [HttpPost]
+        [Route("reset-password")]
+        public async Task<IActionResult> ResetPassword([FromBody] PasswordResetDto request)
+        {
+            var user = await userManager.FindByEmailAsync(request.Email);
+            if (user == null)
+            {
+                return BadRequest("User not found.");
+            }
+
+            // Reset the password
+            var result = await userManager.ResetPasswordAsync(user, request.Token, request.NewPassword);
+
+            if (result.Succeeded)
+            {
+                return Ok("Password has been reset successfully.");
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
+            }
+
+            return ValidationProblem(ModelState);
+        }
+
+        [HttpPost]
+        [Route("generate-password-reset-link")]
+        public async Task<IActionResult> GeneratePasswordResetLink([FromBody] PasswordResetRequestDto request)
+        {
+            var user = await userManager.FindByEmailAsync(request.Email);
+            if (user == null)
+            {
+                return BadRequest("User not found.");
+            }
+
+            // Generate password reset token
+            var token = await userManager.GeneratePasswordResetTokenAsync(user);
+
+            // Generate the reset link
+            var resetLink = Url.Action(
+                action: "ResetPassword", // This is the action name for resetting the password
+                controller: "Auth", // This is the controller name
+                values: new { email = request.Email, token = token },
+                protocol: Request.Scheme // Ensures the link includes the correct protocol (http/https)
+            );
+
+            return Ok(new { ResetLink = resetLink });
+        }
+
+
+
     }
 }
