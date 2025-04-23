@@ -10,6 +10,8 @@ import { StarshipsComponent } from './starships/starships.component';
 import { PlanetsComponent } from './planets/planets.component';
 import { CharactersComponent } from './characters/characters.component';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 import { AuthGuard } from './guards/auth.guard';
 import { RoleGuard } from './guards/role.guard';
@@ -30,6 +32,8 @@ const routes: Routes = [
     data: { role: 'Reader' }
   },
   { path: 'unauthorized', component: UnauthorizedComponent },
+  { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'reset-password', component: ResetPasswordComponent },
   { path: '**', redirectTo: '' }
 ];
 

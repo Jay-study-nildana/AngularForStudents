@@ -10,6 +10,7 @@ import { AuthService } from '../services/auth.service';
 export class NavbarComponent implements OnInit {
   isLoggedIn = false;
   hasReaderRole = false;
+  isCollapsed = true;
   
   constructor(
     private authService: AuthService,
@@ -27,5 +28,9 @@ export class NavbarComponent implements OnInit {
   logout(): void {
     this.authService.logout();
     this.router.navigate(['/']);
+  }
+
+  toggleNavbar() {
+    this.isCollapsed = !this.isCollapsed;
   }
 }

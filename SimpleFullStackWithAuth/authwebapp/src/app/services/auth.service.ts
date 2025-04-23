@@ -63,6 +63,22 @@ export class AuthService {
     }
     return user.roles.includes(role);
   }
+
+  generatePasswordResetLink(email: string): Observable<{resetLink: string}> {
+    return this.http.post<{resetLink: string}>(
+      `${this.baseUrl}/Auth/generate-password-reset-link`,
+      { email }
+    );
+  }
+
+  resetPassword(email: string, token: string, newPassword: string): Observable<any> {
+    return this.http.post(
+      `${this.baseUrl}/Auth/reset-password`,
+      { email, token, newPassword },
+      // Specify that we expect a text response, not JSON
+      { responseType: 'text' }
+    );
+  }
   
   // Get current user value without subscribing
   public get currentUserValue(): LoginResponse | null {
