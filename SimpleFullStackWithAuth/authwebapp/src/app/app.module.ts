@@ -35,6 +35,7 @@ import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { CharactersComponent } from './characters/characters.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { UpdateUserComponent } from './update-user/update-user.component';
 
 
 @NgModule({
@@ -52,7 +53,8 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     UnauthorizedComponent,
     CharactersComponent,
     ForgotPasswordComponent,
-    ResetPasswordComponent
+    ResetPasswordComponent,
+    UpdateUserComponent
   ],
   imports: [
     BrowserModule,

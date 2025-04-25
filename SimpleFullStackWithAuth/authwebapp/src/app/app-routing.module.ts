@@ -12,6 +12,7 @@ import { CharactersComponent } from './characters/characters.component';
 import { UnauthorizedComponent } from './unauthorized/unauthorized.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { UpdateUserComponent } from './update-user/update-user.component';
 
 import { AuthGuard } from './guards/auth.guard';
 import { RoleGuard } from './guards/role.guard';
@@ -34,6 +35,7 @@ const routes: Routes = [
   { path: 'unauthorized', component: UnauthorizedComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'reset-password', component: ResetPasswordComponent },
+  { path: 'update-profile', component: UpdateUserComponent },
   { path: '**', redirectTo: '' }
 ];
 
