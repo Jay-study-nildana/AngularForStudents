@@ -1,7 +1,12 @@
-﻿using AuthAPI.DTO;
+﻿using System.Security.Claims;
+using AuthAPI.Data;
+using AuthAPI.Domain;
+using AuthAPI.DTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace AuthAPI.Controllers
 {
@@ -11,12 +16,15 @@ namespace AuthAPI.Controllers
     {
         private readonly UserManager<IdentityUser> userManager;
         private readonly ITokenRepository tokenRepository;
+        private readonly UserProfileDbContext userProfileDbContext;
 
         public AuthController(UserManager<IdentityUser> userManager,
-            ITokenRepository tokenRepository)
+            ITokenRepository tokenRepository,
+            UserProfileDbContext userProfileDbContext)
         {
             this.userManager = userManager;
             this.tokenRepository = tokenRepository;
+            this.userProfileDbContext = userProfileDbContext;
         }
 
         // POST: {apibaseurl}/api/auth/login
@@ -210,7 +218,119 @@ namespace AuthAPI.Controllers
             return Ok(new { ResetLink = resetLink });
         }
 
+        [HttpPost]
+        [Route("update-user-details")]
+        [Authorize] // Ensure the endpoint is authenticated
+        public async Task<IActionResult> UpdateUserDetails([FromBody] UpdateUserDetailsDto request)
+        {
+            // Get the authenticated user's email
+            //var email = User?.Identity?.Name;
 
+            //if (string.IsNullOrEmpty(email))
+            //{
+            //    return Unauthorized("User is not authenticated.");
+            //}
+
+            var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+
+            if (string.IsNullOrEmpty(email))
+            {
+                return Unauthorized("Email claim is missing.");
+            }
+
+            // Check if the user profile exists
+            var userProfile = await userProfileDbContext.UserProfiles.FirstOrDefaultAsync(up => up.Email == email);
+
+            if (userProfile == null)
+            {
+                // Create a new user profile if it doesn't exist
+                userProfile = new UserProfile
+                {
+                    Email = email,
+                    PrimaryMobileNumber = request.PrimaryMobileNumber,
+                    SecondaryMobileNumber = request.SecondaryMobileNumber,
+                    HomeAddress = request.HomeAddress,
+                    OfficeAddress = request.OfficeAddress,
+                    SecondaryEmail = request.SecondaryEmail,
+                    AdditionalInfo = request.AdditionalInfo
+                };
+
+                userProfileDbContext.UserProfiles.Add(userProfile);
+            }
+            else
+            {
+                // Update the existing user profile
+                userProfile.PrimaryMobileNumber = request.PrimaryMobileNumber;
+                userProfile.SecondaryMobileNumber = request.SecondaryMobileNumber;
+                userProfile.HomeAddress = request.HomeAddress;
+                userProfile.OfficeAddress = request.OfficeAddress;
+                userProfile.SecondaryEmail = request.SecondaryEmail;
+                userProfile.AdditionalInfo = request.AdditionalInfo;
+
+                userProfileDbContext.UserProfiles.Update(userProfile);
+            }
+
+            // Save changes to the database
+            await userProfileDbContext.SaveChangesAsync();
+
+            // Return the updated user profile
+            return Ok(userProfile);
+        }
+
+        [HttpGet]
+        [Route("user-details")]
+        [Authorize]
+        public async Task<IActionResult> GetUserDetails()
+        {
+            // Get the authenticated user's email from claims
+            var email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+
+            if (string.IsNullOrEmpty(email))
+            {
+                return Unauthorized("Email claim is missing.");
+            }
+
+            // Retrieve the UserProfile from the database
+            var userProfile = await userProfileDbContext.UserProfiles.FirstOrDefaultAsync(up => up.Email == email);
+
+            // Map UserProfile to UserProfileDto
+            var userProfileDto = userProfile == null ? null : new UserProfileDto
+            {
+                Email = userProfile.Email,
+                PrimaryMobileNumber = userProfile.PrimaryMobileNumber,
+                SecondaryMobileNumber = userProfile.SecondaryMobileNumber,
+                HomeAddress = userProfile.HomeAddress,
+                OfficeAddress = userProfile.OfficeAddress,
+                SecondaryEmail = userProfile.SecondaryEmail,
+                AdditionalInfo = userProfile.AdditionalInfo
+            };
+
+            // Retrieve the user's claims
+            var userClaims = User.Claims.Select(c => new ClaimDto
+            {
+                Type = c.Type,
+                Value = c.Value
+            }).ToList();
+
+            // Create the response DTO
+            var response = new UserDetailsResponseDto
+            {
+                UserProfile = userProfileDto,
+                Claims = userClaims
+            };
+
+            return Ok(response);
+        }
+
+
+        [HttpGet]
+        [Route("debug-claims")]
+        [Authorize]
+        public IActionResult DebugClaims()
+        {
+            var claims = User.Claims.Select(c => new { c.Type, c.Value }).ToList();
+            return Ok(claims);
+        }
 
     }
 }

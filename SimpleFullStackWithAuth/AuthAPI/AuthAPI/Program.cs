@@ -47,6 +47,10 @@ builder.Services.AddDbContext<AuthDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionString"));
 });
 
+builder.Services.AddDbContext<UserProfileDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionString2")));
+
+
 builder.Services.AddScoped<ITokenRepository, TokenRepository>();
 
 builder.Services.AddIdentityCore<IdentityUser>()
